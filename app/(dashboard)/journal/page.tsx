@@ -1,7 +1,9 @@
 import EntryCard from "@/components/EntryCard";
 import NewEntryCard from "@/components/NewEntryCard";
+import { analyze } from "@/utils/ai";
 import { getUserByClerkId } from "@/utils/auth";
 import { prisma } from "@/utils/db";
+import { JournalEntry } from "@prisma/client";
 import Link from "next/link";
 import { FC } from "react";
 
