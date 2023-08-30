@@ -1,19 +1,23 @@
 "use client";
 import { createNewEntry } from "@/utils/api";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
+import { FC, useTransition } from "react";
 
 interface NewEntryCardProps {}
 
 const NewEntryCard: FC<NewEntryCardProps> = ({}) => {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const handleOnClick = async () => {
     const data = await createNewEntry();
-    console.log(data);
-
-    router.push(`/journal/${data.id}`);
+    startTransition(() => router.push(`/journal/${data.id}`));
+    startTransition(() => router.refresh());
   };
+
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div

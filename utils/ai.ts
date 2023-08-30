@@ -28,11 +28,11 @@ const parser = StructuredOutputParser.fromZodSchema(
       .describe(
         "a hexidecimal color code the represents that mood of the entry. Example #0101fe for blue representing happiness."
       ),
-    // sentimentScore: z
-    //   .number()
-    //   .describe(
-    //     "sentiment of the text and rated on a scale from -10 to 10, where -10 is extremely negative, 0 is neutral, and 10 is extremely positive."
-    //   ),
+    sentimentScore: z
+      .number()
+      .describe(
+        "sentiment of the text and rated on a scale from -10 to 10, where -10 is extremely negative, 0 is neutral, and 10 is extremely positive."
+      ),
   })
 );
 ``;
@@ -62,4 +62,25 @@ export const analyze = async (prompt: string) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const QA = async (question: any, entries: any) => {
+  const docs = entries.map(
+    (entry: any) =>
+      new Document({
+        pageContent: entry.content,
+        metadata: { source: entry.id, date: entry.createdAt },
+      })
+  );
+  const model = new OpenAI({ temperature: 0, modelName: "gpt-3.5-turbo" });
+  const chain = loadQARefineChain(model);
+  const embeddings = new OpenAIEmbeddings();
+  const store = await MemoryVectorStore.fromDocuments(docs, embeddings);
+  const relevantDocs = await store.similaritySearch(question);
+  const res = await chain.call({
+    input_documents: relevantDocs,
+    question,
+  });
+
+  return res.output_text;
 };

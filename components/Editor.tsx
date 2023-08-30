@@ -1,10 +1,11 @@
 "use client";
 
-import { updateEntry } from "@/utils/api";
-import { FC, useState } from "react";
+import { deleteEntry, updateEntry } from "@/utils/api";
+import { FC, useState, useTransition } from "react";
 import { useAutosave } from "react-autosave";
 import Spinner from "./Spinner";
 import { JournalEntry } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface EditorProps {
   entry: any;
@@ -14,22 +15,40 @@ const Editor: FC<EditorProps> = ({ entry }) => {
   const [value, setValue] = useState(entry.content);
   const [isLoading, setIsLoading] = useState(false);
   const [analysis, setAnalysis] = useState(entry.analysis);
+  const [isPending, startTransition] = useTransition();
+
   const analysisData = [
     { name: "Summary", value: analysis.summary },
     { name: "Subject", value: analysis.subject },
     { name: "Mood", value: analysis.mood },
     { name: "Negative", value: analysis.negative ? "Yes" : "No" },
   ];
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    await deleteEntry(entry.id);
+    startTransition(() => router.push("/journal"));
+    startTransition(() => router.refresh());
+  };
 
   useAutosave({
     data: value,
     onSave: async (_value) => {
+      if (_value === entry.content) return;
+
       setIsLoading(true);
+
       const data = await updateEntry(entry.id, _value);
-      setAnalysis(data.analysis);
+      if (data.analysis !== undefined) {
+        setAnalysis(data.analysis);
+      }
       setIsLoading(false);
     },
   });
+
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="w-full h-full overflow-y-hidden grid grid-cols-3 relative">
@@ -67,6 +86,15 @@ const Editor: FC<EditorProps> = ({ entry }) => {
                 <span>{data.value}</span>
               </li>
             ))}
+            <li className="py-4 px-8 flex items-center justify-between">
+              <button
+                onClick={handleDelete}
+                type="button"
+                className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+              >
+                Delete
+              </button>
+            </li>
           </ul>
         </div>
       </div>

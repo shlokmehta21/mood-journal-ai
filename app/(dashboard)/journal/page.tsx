@@ -1,9 +1,9 @@
 import EntryCard from "@/components/EntryCard";
 import NewEntryCard from "@/components/NewEntryCard";
+import Question from "@/components/Question";
 import { analyze } from "@/utils/ai";
 import { getUserByClerkId } from "@/utils/auth";
 import { prisma } from "@/utils/db";
-import { JournalEntry } from "@prisma/client";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -15,6 +15,9 @@ const getEntries = async () => {
     },
     orderBy: {
       createdAt: "desc",
+    },
+    include: {
+      analysis: true,
     },
   });
 
@@ -29,9 +32,12 @@ const JournalPage: FC<JournalPageProps> = async ({}) => {
   return (
     <div className=" p-10 bg-zinc-400/10 h-full">
       <h2 className="text-3xl mb-8">Journal</h2>
+      <div className="my-4">
+        <Question />
+      </div>
       <div className=" grid grid-cols-3 gap-4">
         <NewEntryCard />
-        {entries.map((entry) => (
+        {entries.map((entry: any) => (
           <Link key={entry.id} href={`/journal/${entry.id}`}>
             <EntryCard entry={entry} />
           </Link>
