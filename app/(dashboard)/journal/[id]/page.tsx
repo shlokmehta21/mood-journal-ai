@@ -3,7 +3,6 @@ import { getUserByClerkId } from "@/utils/auth";
 import { prisma } from "@/utils/db";
 import { JournalEntry } from "@prisma/client";
 import { FC } from "react";
-import { boolean } from "zod";
 
 const getEntry = async (id: string) => {
   const user = await getUserByClerkId();
