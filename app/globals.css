@@ -2,10 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  transition: all 0.5s ease;
+}
+
 .cl-internal-b3fm6y {
   display: none !important;
 }
 
 .cl-headerSubtitle.🔒️.cl-internal-n84jlv {
+  display: none !important;
+}
+
+.cl-headerSubtitle.🔒️.cl-internal-13zhnx0 {
   display: none !important;
 }

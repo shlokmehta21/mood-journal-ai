@@ -1,4 +1,6 @@
 import BottomNavigation from "@/components/layout/BottomNavigation";
+import ToggleButton from "@/components/layout/ToggleButton";
+import { getCurrentScheme } from "@/utils/getCurrentTheme";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { FC } from "react";
@@ -12,9 +14,15 @@ const links = [
   { href: "/history", label: "History" },
 ];
 
-const DashBoardLayout: FC<DashBoardLayoutProps> = ({ children }) => {
+const DashBoardLayout: FC<DashBoardLayoutProps> = async ({ children }) => {
+  const color = await getCurrentScheme();
+
   return (
-    <div className=" h-screen w-screen overflow-x-hidden bg-slate-100">
+    <div
+      className={`h-screen w-screen overflow-x-hidden ${
+        color === "dark" ? "bg-slate-600" : "bg-slate-100"
+      }`}
+    >
       {/* <aside className=" absolute w-[200px] top-0 left-0 h-full border-r border-black/10">
         <div>Mood</div>
         <ul>
@@ -35,7 +43,11 @@ const DashBoardLayout: FC<DashBoardLayoutProps> = ({ children }) => {
         <div className="h-[calc(100vh-60px)]">{children}</div>
       </div> */}
 
-      <div className="h-full">
+      <div className="h-full relative">
+        <div className=" absolute top-0 right-0 p-4">
+          <ToggleButton />
+        </div>
+        {/* <UserButton afterSignOutUrl="/" /> */}
         {children}
         <BottomNavigation />
       </div>

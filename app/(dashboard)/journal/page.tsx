@@ -32,7 +32,7 @@ const JournalPage: FC<JournalPageProps> = async ({}) => {
   return (
     <div className="p-10">
       <h2 className="text-3xl mb-8">Journal</h2>
-      <div className="my-4">
+      <div className=" flex justify-center items-center content-center my-4">
         <Question />
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">

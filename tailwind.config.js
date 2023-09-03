@@ -8,6 +8,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // Add a custom class for the loader
+      animation: {
+        "spin-slow": "spin 2s linear infinite",
+      },
+      // Define the loader class
+      loader: {
+        animation: "spin-slow",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

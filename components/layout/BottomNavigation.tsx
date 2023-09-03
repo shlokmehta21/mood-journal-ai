@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { FC, useState, useTransition } from "react";
 import Spinner from "../Spinner";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface BottomNavigationProps {}
 
@@ -11,6 +12,7 @@ const BottomNavigation: FC<BottomNavigationProps> = ({}) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isCreating, setIsCreating] = useState(false);
+  const pathname = usePathname();
 
   const handleOnClick = async () => {
     setIsCreating(true);
@@ -19,6 +21,8 @@ const BottomNavigation: FC<BottomNavigationProps> = ({}) => {
     startTransition(() => router.push(`/journal/${data.id}`));
     startTransition(() => router.refresh());
   };
+
+  console.log(pathname);
 
   return (
     <div className="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600">
@@ -30,7 +34,11 @@ const BottomNavigation: FC<BottomNavigationProps> = ({}) => {
         >
           <Link href="/journal">
             <svg
-              className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+              className={`w-5 h-5 mb-1 ${
+                pathname === "/journal"
+                  ? "text-blue-600"
+                  : "text-gray-500 dark:text-gray-400"
+              }  group-hover:text-blue-600 dark:group-hover:text-blue-500`}
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
@@ -94,8 +102,8 @@ const BottomNavigation: FC<BottomNavigationProps> = ({}) => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   stroke-width="2"
                   d="M9 1v16M1 9h16"
                 />
@@ -129,7 +137,11 @@ const BottomNavigation: FC<BottomNavigationProps> = ({}) => {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+              className={`w-5 h-5 mb-1 ${
+                pathname === "/history"
+                  ? "text-blue-600"
+                  : "text-gray-500 dark:text-gray-400"
+              } group-hover:text-blue-600 dark:group-hover:text-blue-500 `}
             >
               <rect x="3" y="1" width="6" height="18" />
               <rect x="10" y="5" width="6" height="14" />
