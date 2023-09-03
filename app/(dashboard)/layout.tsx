@@ -1,3 +1,4 @@
+import BottomNavigation from "@/components/layout/BottomNavigation";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { FC } from "react";
@@ -13,8 +14,8 @@ const links = [
 
 const DashBoardLayout: FC<DashBoardLayoutProps> = ({ children }) => {
   return (
-    <div className=" h-screen w-screen relative">
-      <aside className=" absolute w-[200px] top-0 left-0 h-full border-r border-black/10">
+    <div className=" h-screen w-screen overflow-x-hidden bg-slate-100">
+      {/* <aside className=" absolute w-[200px] top-0 left-0 h-full border-r border-black/10">
         <div>Mood</div>
         <ul>
           {links.map(({ href, label }) => (
@@ -23,15 +24,20 @@ const DashBoardLayout: FC<DashBoardLayoutProps> = ({ children }) => {
             </li>
           ))}
         </ul>
-      </aside>
+      </aside> */}
 
-      <div className="ml-[200px] h-full">
+      {/* <div className="ml-[200px] h-full">
         <header className=" h-[60px] border-b border-black/10">
           <div className="h-full w-full px-6 flex items-center justify-end">
             <UserButton afterSignOutUrl="/" />
           </div>
         </header>
         <div className="h-[calc(100vh-60px)]">{children}</div>
+      </div> */}
+
+      <div className="h-full">
+        {children}
+        <BottomNavigation />
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ const History: FC<HistoryProps> = async ({}) => {
   return (
     <div className="w-full h-full overflow-x-hidden">
       <div>{`Avg. Sentiment ${avg}`}</div>
-      <div className="w-full h-full flex flex-col items-center justify-center">
+      <div className="w-full h-full flex flex-col items-center justify-center z-20">
         <HistoryChart data={analysis} />
       </div>
     </div>

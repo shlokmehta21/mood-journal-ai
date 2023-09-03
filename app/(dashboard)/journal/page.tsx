@@ -30,13 +30,13 @@ const JournalPage: FC<JournalPageProps> = async ({}) => {
   const entries = await getEntries();
 
   return (
-    <div className=" p-10 bg-zinc-400/10 h-full">
+    <div className="p-10">
       <h2 className="text-3xl mb-8">Journal</h2>
       <div className="my-4">
         <Question />
       </div>
-      <div className=" grid grid-cols-3 gap-4">
-        <NewEntryCard />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        {/* <NewEntryCard /> */}
         {entries.map((entry: any) => (
           <Link key={entry.id} href={`/journal/${entry.id}`}>
             <EntryCard entry={entry} />

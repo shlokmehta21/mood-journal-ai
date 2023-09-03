@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { JournalEntry } from "@prisma/client";
 
 interface EntryCardProps {
   entry: any;

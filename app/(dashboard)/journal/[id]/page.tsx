@@ -29,7 +29,7 @@ const EntryPage: FC<EntryPageProps> = async ({ params }) => {
   const entry = await getEntry(params.id);
 
   return (
-    <div className="h-full w-full">
+    <div className=" h-screen mb-[90px] md:mb-0">
       <Editor entry={entry as JournalEntry} />
     </div>
   );
