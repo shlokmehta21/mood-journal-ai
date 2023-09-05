@@ -84,7 +84,7 @@ const Editor: FC<EditorProps> = ({ entry }) => {
                 className="px-4 py-5 flex items-center justify-between border-t border-b border-black/10"
               >
                 <span className="text-lg font-semibold">{data.name}</span>
-                <span>{data.value}</span>
+                <span className="ml-6">{data.value}</span>
               </li>
             ))}
             <li className="py-4 px-8 flex items-center justify-between">

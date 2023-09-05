@@ -8,6 +8,10 @@ import {
   InputRightAddon,
   Button,
   useColorMode,
+  Center,
+  Spinner,
+  Card,
+  Text,
 } from "@chakra-ui/react";
 import { FC, useState } from "react";
 
@@ -36,7 +40,11 @@ const Question: FC<QuestionProps> = ({}) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <InputGroup borderRadius={10} w={["xs", "sm", "md"]} className="my-5">
+        <InputGroup
+          borderRadius={10}
+          w={["xs", "sm", "md", "xl"]}
+          className="my-5"
+        >
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="gray.400" />
           </InputLeftElement>
@@ -63,8 +71,18 @@ const Question: FC<QuestionProps> = ({}) => {
           </InputRightAddon>
         </InputGroup>
       </form>
-      {loading && <p>Loading...</p>}
-      {response && <p>{response}</p>}
+      {loading && (
+        <Center>
+          <Spinner />
+        </Center>
+      )}
+      {response && (
+        <Card maxW={"xl"} variant={"outline"} p={5}>
+          <Center>
+            <Text>{response}</Text>
+          </Center>
+        </Card>
+      )}
     </div>
   );
 };

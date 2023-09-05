@@ -9,9 +9,13 @@ const EntryCard: FC<EntryCardProps> = ({ entry }) => {
 
   return (
     <div className="divide-y divide-gray-200 dark:divide-gray-600 overflow-hidden rounded-lg bg-white dark:bg-slate-700 shadow">
-      <div className="px-4 py-5 sm:px-6">{date}</div>
-      <div className="px-4 py-5 sm:p-6">{entry?.analysis?.summary}</div>
-      <div className="px-4 py-4 sm:px-6">{entry?.analysis?.mood}</div>
+      <div className="px-4 py-5 sm:px-6 capitalize">{date}</div>
+      <div className="px-4 py-5 sm:p-6 capitalize">
+        {entry?.analysis?.summary}
+      </div>
+      <div className="px-4 py-4 sm:px-6 capitalize">
+        {entry?.analysis?.mood}
+      </div>
     </div>
   );
 };

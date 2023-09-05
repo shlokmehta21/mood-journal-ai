@@ -1,8 +1,16 @@
 "use client";
 
+import { useColorMode } from "@chakra-ui/react";
 import { data } from "autoprefixer";
 import { FC } from "react";
-import { Line, ResponsiveContainer, XAxis, Tooltip, LineChart } from "recharts";
+import {
+  Line,
+  ResponsiveContainer,
+  XAxis,
+  Tooltip,
+  LineChart,
+  CartesianGrid,
+} from "recharts";
 
 interface HistoryChartProps {
   data: any;
@@ -18,6 +26,25 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     minute: "numeric",
   });
 
+  const options = {
+    maintainAspectRatio: false,
+    responsive: true,
+    scales: {
+      x: {
+        type: "time",
+        distribution: "linear",
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          color: "#323546",
+        },
+      },
+    },
+  };
+
   if (active) {
     const analysis = payload[0].payload;
     return (
@@ -26,7 +53,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
           className="absolute left-2 top-2 w-2 h-2 rounded-full"
           style={{ background: analysis.color }}
         ></div>
-        <p className="label text-sm text-black/30">{dateLabel}</p>
+        <p className="label text-sm text-black/30 dark:text-slate-50">
+          {dateLabel}
+        </p>
         <p className="intro text-xl uppercase">{analysis.mood}</p>
       </div>
     );
@@ -36,6 +65,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 const HistoryChart: FC<HistoryChartProps> = ({ data }) => {
+  const { colorMode } = useColorMode();
   return (
     <ResponsiveContainer width="90%" height={"90%"}>
       <LineChart width={300} data={data}>
@@ -46,7 +76,15 @@ const HistoryChart: FC<HistoryChartProps> = ({ data }) => {
           strokeWidth={2}
           activeDot={{ r: 8 }}
         />
-        <XAxis dataKey="createdAt" />
+        <CartesianGrid
+          stroke={`${colorMode === "dark" ? "#838383" : "lightgray"}`}
+          strokeDasharray="5 5"
+        />
+
+        <XAxis
+          dataKey="createdAt"
+          stroke={`${colorMode === "dark" ? "lightgray" : "lightgray"} `}
+        />
         <Tooltip content={CustomTooltip} />
       </LineChart>
     </ResponsiveContainer>
