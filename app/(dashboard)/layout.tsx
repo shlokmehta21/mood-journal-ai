@@ -15,7 +15,9 @@ const DashBoardLayout: FC<DashBoardLayoutProps> = async ({ children }) => {
   return (
     <div
       className={`h-screen w-screen overflow-x-hidden ${
-        color === "dark" ? "bg-slate-600" : "bg-slate-100"
+        color === "dark"
+          ? "bg-black/50"
+          : "bg-gradient-to-b from-slate-50 to-slate-300"
       }`}
     >
       <div className="h-full relative">

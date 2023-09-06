@@ -1,7 +1,6 @@
 "use client";
 
 import { useColorMode } from "@chakra-ui/react";
-import { data } from "autoprefixer";
 import { FC } from "react";
 import {
   Line,

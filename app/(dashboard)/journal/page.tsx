@@ -6,6 +6,8 @@ import { getUserByClerkId } from "@/utils/auth";
 import { prisma } from "@/utils/db";
 import Link from "next/link";
 import { FC } from "react";
+import type { User } from "@clerk/nextjs/api";
+import { currentUser } from "@clerk/nextjs";
 
 const getEntries = async () => {
   const user = await getUserByClerkId();
@@ -28,15 +30,24 @@ interface JournalPageProps {}
 
 const JournalPage: FC<JournalPageProps> = async ({}) => {
   const entries = await getEntries();
+  const user: User | null = await currentUser();
 
   return (
     <div className="p-10">
-      <h2 className="text-3xl mb-8">Journal</h2>
+      <h2 className="text-2xl mb-8 mt-[-15px] text-center mr-4 md:text-left md:text-3xl">
+        Hey,{" "}
+        {`${user?.firstName?.charAt(0)?.toUpperCase()}${user?.firstName?.slice(
+          1
+        )}`}{" "}
+        {`${user?.lastName?.charAt(0)?.toUpperCase()}${user?.lastName?.slice(
+          1
+        )}`}{" "}
+        👋
+      </h2>
       <div className=" flex justify-center items-center content-center my-4">
         <Question />
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {/* <NewEntryCard /> */}
         {entries.map((entry: any) => (
           <Link key={entry.id} href={`/journal/${entry.id}`}>
             <EntryCard entry={entry} />

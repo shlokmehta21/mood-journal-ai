@@ -7,11 +7,21 @@ import {
   Input,
   InputRightAddon,
   Button,
-  useColorMode,
   Center,
   Spinner,
   Card,
   Text,
+  useColorMode,
+  useDisclosure,
+} from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import { FC, useState } from "react";
 
@@ -21,7 +31,9 @@ const Question: FC<QuestionProps> = ({}) => {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState("");
+  const [error, setError] = useState(false);
   const { colorMode } = useColorMode();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -30,9 +42,15 @@ const Question: FC<QuestionProps> = ({}) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (value === "") {
+      setError(true);
+      return;
+    }
     setLoading(true);
+    setError(false);
     const answer = await askQuestion(value);
     setResponse(answer);
+    onOpen();
     setValue("");
     setLoading(false);
   };
@@ -53,20 +71,24 @@ const Question: FC<QuestionProps> = ({}) => {
             type="text"
             value={value}
             onChange={onChange}
-            placeholder={"Ask a question"}
-            border="1px solid #A0AEC0"
+            placeholder={error ? "Please enter the question" : "Ask a question"}
+            border={`1px solid ${
+              error ? "red" : colorMode === "dark" ? "#4b5563" : "#A0AEC0"
+            } `}
             textColor="gray.400"
             _placeholder={{ color: "gray.400" }}
           />
 
           <InputRightAddon
-            className={`rounded-md bg-slate-600/50 dark:bg-[#A0AEC0]`}
+            className={`rounded-md bg-slate-400/50 dark:bg-gray-800`}
             p={0}
             mx={3}
             border="none"
           >
             <Button size="sm" disabled={loading} type="submit">
-              <SearchIcon color="gray.900" />
+              <SearchIcon
+                color={`${colorMode === "dark" ? "gray.400" : "gray.800"}`}
+              />
             </Button>
           </InputRightAddon>
         </InputGroup>
@@ -76,13 +98,21 @@ const Question: FC<QuestionProps> = ({}) => {
           <Spinner />
         </Center>
       )}
-      {response && (
-        <Card maxW={"xl"} variant={"outline"} p={5}>
-          <Center>
-            <Text>{response}</Text>
-          </Center>
-        </Card>
-      )}
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{response}</ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </div>
   );
 };

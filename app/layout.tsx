@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { ChakraUIProvider } from "@/providers/ChakraUIProvider";
 import { getCurrentScheme } from "@/utils/getCurrentTheme";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
     >
       <html lang="en" className={color === "dark" ? "dark" : "light"}>
         <body className={inter.className}>
+          <NextTopLoader />
           <ChakraUIProvider>{children}</ChakraUIProvider>
         </body>
       </html>

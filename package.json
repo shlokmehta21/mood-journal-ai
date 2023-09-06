@@ -28,6 +28,7 @@
     "framer-motion": "^10.16.2",
     "langchain": "^0.0.136",
     "next": "13.4.19",
+    "nextjs-toploader": "^1.4.2",
     "postcss": "8.4.28",
     "react": "18.2.0",
     "react-autosave": "^0.4.2",
