@@ -23,7 +23,6 @@ interface HistoryProps {}
 
 const History: FC<HistoryProps> = async ({}) => {
   const { analysis, avg } = await getData();
-  console.log(analysis, avg);
 
   return (
     <div className="w-full h-full overflow-auto p-6">

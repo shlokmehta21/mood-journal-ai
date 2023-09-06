@@ -4,11 +4,11 @@ import { deleteEntry, updateEntry } from "@/utils/api";
 import { FC, useState, useTransition } from "react";
 import { useAutosave } from "react-autosave";
 import Spinner from "./Spinner";
-import { JournalEntry } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { JournalEntry } from "@/types/JournalEntry";
 
 interface EditorProps {
-  entry: any;
+  entry: JournalEntry;
 }
 
 const Editor: FC<EditorProps> = ({ entry }) => {
@@ -18,10 +18,10 @@ const Editor: FC<EditorProps> = ({ entry }) => {
   const [isPending, startTransition] = useTransition();
 
   const analysisData = [
-    { name: "Summary", value: analysis.summary },
-    { name: "Subject", value: analysis.subject },
-    { name: "Mood", value: analysis.mood },
-    { name: "Negative", value: analysis.negative ? "Yes" : "No" },
+    { name: "Summary", value: analysis?.summary },
+    { name: "Subject", value: analysis?.subject },
+    { name: "Mood", value: analysis?.mood },
+    { name: "Negative", value: analysis?.negative ? "Yes" : "No" },
   ];
   const router = useRouter();
 

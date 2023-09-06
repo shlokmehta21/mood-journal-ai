@@ -1,5 +1,6 @@
 "use client";
 
+import { Analysis } from "@/types/Analysis";
 import { useColorMode } from "@chakra-ui/react";
 import { FC } from "react";
 import {
@@ -12,7 +13,7 @@ import {
 } from "recharts";
 
 interface HistoryChartProps {
-  data: any;
+  data: Analysis[];
 }
 
 const CustomTooltip = ({ active, payload, label }: any) => {

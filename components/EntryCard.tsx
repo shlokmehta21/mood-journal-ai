@@ -1,7 +1,8 @@
+import { JournalEntry } from "@/types/JournalEntry";
 import { FC } from "react";
 
 interface EntryCardProps {
-  entry: any;
+  entry: JournalEntry;
 }
 
 const EntryCard: FC<EntryCardProps> = ({ entry }) => {
