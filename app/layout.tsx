@@ -12,8 +12,6 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Mood AI ✨",
   description: "The best Journal App.",
-  manifest: "/manifest.json",
-  themeColor: "#000000",
 };
 
 export default async function RootLayout({
@@ -29,10 +27,11 @@ export default async function RootLayout({
         baseTheme: color === "dark" ? dark : undefined,
       }}
     >
-      <html lang="en" className={color === "dark" ? "dark" : "light"}>
-        <head>
-          <link rel="manifest" href="/manifest.json" />
-        </head>
+      <html
+        lang="en"
+        className={color === "dark" ? "dark" : "light"}
+        data-theme={color === "dark" ? "dark" : "light"}
+      >
         <body className={inter.className}>
           <NextTopLoader />
           <ChakraUIProvider>{children}</ChakraUIProvider>

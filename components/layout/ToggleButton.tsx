@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation";
 interface ToggleButtonProps {}
 
 const ToggleButton: FC<ToggleButtonProps> = ({}) => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode, setColorMode } = useColorMode();
   const router = useRouter();
 
   const toggleColor = async () => {
-    await await toggleScheme();
+    const color = await toggleScheme();
+    setColorMode(color);
     router.refresh();
-    toggleColorMode();
   };
 
   return (

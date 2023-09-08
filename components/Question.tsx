@@ -99,20 +99,22 @@ const Question: FC<QuestionProps> = ({}) => {
         </Center>
       )}
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>{response}</ModalBody>
+      <div className="">
+        <Modal closeOnEsc isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent px={1}>
+            <ModalHeader>Answer</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>{response}</ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </div>
     </div>
   );
 };
