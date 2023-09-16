@@ -52,7 +52,7 @@ const JournalPage: FC<JournalPageProps> = async ({}) => {
       {entries.length === 0 && (
         <div className="flex flex-col justify-center items-center pt-[8em]">
           <EmptyState />
-          <h2 className="text-xl mt-4">You don't have any entries yet.</h2>
+          <h2 className="text-xl mt-4">You don&apos;t have any entries yet.</h2>
           <h2 className="text-lg mt-4">Click + to get started</h2>
         </div>
       )}

@@ -29,7 +29,7 @@ const History: FC<HistoryProps> = async ({}) => {
     return (
       <div className="w-screen h-screen flex flex-col justify-center items-center content-center">
         <EmptyState />
-        <h2 className="text-xl mt-4">You don't have any entries yet.</h2>
+        <h2 className="text-xl mt-4">You don&apos;t have any entries yet.</h2>
         <h2 className="text-lg mt-4">Click + to get started</h2>
       </div>
     );
