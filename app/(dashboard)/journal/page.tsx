@@ -8,6 +8,8 @@ import Link from "next/link";
 import { FC } from "react";
 import type { User } from "@clerk/nextjs/api";
 import { currentUser } from "@clerk/nextjs";
+import Image from "next/image";
+import EmptyState from "@/components/layout/EmptyState";
 
 const getEntries = async () => {
   const user = await getUserByClerkId();
@@ -44,9 +46,16 @@ const JournalPage: FC<JournalPageProps> = async ({}) => {
         )}`}{" "}
         👋
       </h2>
-      <div className=" flex justify-center items-center content-center my-4">
+      <div className="flex justify-center items-center content-center my-4">
         <Question />
       </div>
+      {entries.length === 0 && (
+        <div className="flex flex-col justify-center items-center pt-[8em]">
+          <EmptyState />
+          <h2 className="text-xl mt-4">You don't have any entries yet.</h2>
+          <h2 className="text-lg mt-4">Click + to get started</h2>
+        </div>
+      )}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {entries.map((entry: any) => (
           <Link key={entry.id} href={`/journal/${entry.id}`}>
