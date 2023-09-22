@@ -48,11 +48,15 @@ const Question: FC<QuestionProps> = ({}) => {
     }
     setLoading(true);
     setError(false);
-    const answer = await askQuestion(value);
-    setResponse(answer);
     onOpen();
-    setValue("");
+    await askQuestion(value, setResponse);
     setLoading(false);
+    setValue("");
+  };
+
+  const closeModal = () => {
+    setResponse("");
+    onClose();
   };
 
   return (
@@ -93,22 +97,25 @@ const Question: FC<QuestionProps> = ({}) => {
           </InputRightAddon>
         </InputGroup>
       </form>
-      {loading && (
-        <Center>
-          <Spinner />
-        </Center>
-      )}
 
       <div className="">
-        <Modal closeOnEsc isOpen={isOpen} onClose={onClose}>
+        <Modal closeOnEsc isOpen={isOpen} onClose={closeModal}>
           <ModalOverlay />
           <ModalContent px={1}>
             <ModalHeader>Answer</ModalHeader>
             <ModalCloseButton />
-            <ModalBody>{response}</ModalBody>
+            <ModalBody>
+              {response === "" ? (
+                <Center>
+                  <Spinner />
+                </Center>
+              ) : (
+                response
+              )}
+            </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
+              <Button colorScheme="blue" mr={3} onClick={closeModal}>
                 Close
               </Button>
             </ModalFooter>

@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 const createURL = (path: string) => {
   return window.location.origin + path;
 };
@@ -64,7 +66,10 @@ export const updateEntry = async (id: string, content: string) => {
   }
 };
 
-export const askQuestion = async (question: string) => {
+export const askQuestion = async (
+  question: string,
+  setState: Dispatch<SetStateAction<string>>
+) => {
   const response = await fetch(
     new Request(createURL("/api/question"), {
       method: "POST",
@@ -72,8 +77,27 @@ export const askQuestion = async (question: string) => {
     })
   );
 
-  if (response.ok) {
-    const data = await response.json();
-    return data.data;
+  const stream = response?.body;
+
+  try {
+    const reader = stream?.getReader();
+    const decoder = new TextDecoder();
+    let done = false;
+    let result = "";
+
+    while (!done) {
+      // @ts-ignore
+      const { value, done: doneReading } = await reader?.read();
+      done = doneReading;
+      const chunkValue = decoder.decode(value);
+      console.log(chunkValue);
+      setState((prev) => prev + chunkValue);
+    }
+
+    return result;
+  } catch (error) {
+    console.log(error);
   }
+
+  console.log(response, "Question");
 };
